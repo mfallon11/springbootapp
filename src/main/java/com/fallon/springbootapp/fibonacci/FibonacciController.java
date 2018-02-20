@@ -9,7 +9,9 @@ public class FibonacciController {
 
     @RequestMapping("/fibonacci")
     public long[] getFibonacciNumbers(@RequestParam(value="number", defaultValue="1") int number) {
-
+        if(number < 0) {
+            return new long[0];
+        }
         long[] fibonacciSequence = new long[number];
 
         for(int i = 1; i <= number; i++) {

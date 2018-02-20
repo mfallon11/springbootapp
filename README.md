@@ -18,7 +18,7 @@ curl localhost:8080/hello
 Expected Results: Hello World
 
 Text Block Parser
-curl -H "Content-Type application/json" -X POST -d '{"text":"A random text string of any text"}' localhost:8080/parsetext
+curl -H "Content-Type: application/json" -X POST -d '{"text":"A random text string of any text"}' localhost:8080/parsetext
 
 Example results base on above input
 [{"word":"A","occurrences":1},{"word":"any","occurrences":1},{"word":"of","occurrences":1},{"word":"random","occurrences":1},{"word":"string","occurrences":1},{"word":"text","occurrences":2}]
@@ -45,7 +45,7 @@ Expected Results
 {"success":false} if employee was not successfully added
 
 Get Employee
-curl -H "Content-Type: application/json" -X POST -d '{"employeeNumber":"1"}' localhost:8080/employee/get
+curl localhost:8080/employee/get?employeeNumber=1
 
 Expected Results
 {"success":true,"employees":[{"employeeNumber":1,"firstName":"Matt","lastName":"Fallon"}]} if the employee was found
@@ -59,7 +59,7 @@ Expected Results
 {"success":false,"employees":[]} if the employee was not found
 
 Delete Employee
-curl -H "Content-Type: application/json" -X POST -d '{"employeeNumber":"2"}' localhost:8080/employee/delete
+curl -H "Content-Type: application/json" -X DELETE -d '{"employeeNumber":"2"}' localhost:8080/employee/delete
 
 Expected Results
 {"success":true} if employee was successfully deleted 

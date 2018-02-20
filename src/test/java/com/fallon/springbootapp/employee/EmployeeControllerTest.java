@@ -19,6 +19,7 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,9 +55,8 @@ public class EmployeeControllerTest {
 
         when(jdbcTemplateMock.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(employeeList);
 
-        mockMvc.perform(post("/employee/get")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"employeeNumber\":\"1\"}"))
+        mockMvc.perform(get("/employee/get?employeeNumber=1")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"success\":true,\"employees\":[{\"employeeNumber\":1,\"firstName\":\"Matt\",\"lastName\":\"Fallon\"}]}"));
     }
@@ -79,7 +79,7 @@ public class EmployeeControllerTest {
     public void deleteEmployeeReturnsTrue() throws Exception {
         when(jdbcTemplateMock.update("DELETE FROM employees WHERE employee_number=?", 1)).thenReturn(1);
 
-        mockMvc.perform(post("/employee/delete")
+        mockMvc.perform(delete("/employee/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"employeeNumber\":\"1\"}"))
                 .andExpect(status().isOk())

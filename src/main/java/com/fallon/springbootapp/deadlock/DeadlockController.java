@@ -4,9 +4,17 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Detects thread deadlock
+ */
 @RestController
 public class DeadlockController {
 
+    /**
+     * Creates two threads that will deadlock and detects the deadlock
+     *
+     * @return Returns Result object representing success or failure
+     */
         @RequestMapping("/deadlock")
         public Result detectDeadlock() {
             String str1 = "String1";
@@ -27,10 +35,18 @@ public class DeadlockController {
 
     }
 
-    class Result {
+/**
+ * Encapsulates a boolean representing success or failure
+ */
+class Result {
         private boolean success;
 
-        public Result(boolean success) {
+    /**
+     * Constructor initializing success or failure.
+     * 
+     * @param success boolean representing whether or not the operation was successful
+     */
+    public Result(boolean success) {
             this.success = success;
         }
 

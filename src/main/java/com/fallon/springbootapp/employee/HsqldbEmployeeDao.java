@@ -30,6 +30,16 @@ public class HsqldbEmployeeDao implements EmployeeDao {
 
     @Override
     public boolean add(Employee employee) {
+        List<Employee> result = jdbcTemplate.query(
+                "SELECT employee_number, first_name, last_name FROM employees WHERE employee_number = ?", new Object[] { 1 },
+                (rs, rowNum) -> new Employee(rs.getLong("employee_number"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name")));
+
+        if(result.size() > 0) {
+            return true;
+        }
+
         if(jdbcTemplate.update("INSERT INTO employees(employee_number, first_name, last_name) VALUES (?,?,?)",
                 employee.getEmployeeNumber(), employee.getFirstName(), employee.getLastName()) == 1) {
             return true;

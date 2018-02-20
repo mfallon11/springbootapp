@@ -3,10 +3,7 @@ package com.fallon.springbootapp.employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +28,9 @@ public class EmployeeController {
     }
 
     // Using the json as input here instead of just passing an int to be consistent
-    @RequestMapping(value="/employee/get", method=RequestMethod.POST)
-    public EmployeeResult getEmployee(@RequestBody EmployeeNumber employeeNumber) {
-        Optional<Employee> employee = employeeDao.get(employeeNumber.getEmployeeNumber());
+    @RequestMapping(value="/employee/get")
+    public EmployeeResult getEmployee(@RequestParam(value="employeeNumber", defaultValue="1") int employeeNumber) {
+        Optional<Employee> employee = employeeDao.get(employeeNumber);
         if(employee.isPresent()) {
             return new EmployeeResult(true, new Employee[]{employee.get()});
         }
@@ -54,62 +51,10 @@ public class EmployeeController {
     }
 
     // Using the json as input here instead of just passing an int to be consistent
-    @RequestMapping(value="/employee/delete", method=RequestMethod.POST)
+    @RequestMapping(value="/employee/delete", method=RequestMethod.DELETE)
     public BooleanResult deleteEmployee(@RequestBody EmployeeNumber employeeNumber) {
         return new BooleanResult(employeeDao.delete(employeeNumber.getEmployeeNumber()));
     }
 }
 
-class EmployeeNumber {
-    private int employeeNumber;
 
-    public int getEmployeeNumber() {
-        return employeeNumber;
-    }
-
-    public void setEmployeeNumber(int employeeNumber) {
-        this.employeeNumber = employeeNumber;
-    }
-}
-
-class BooleanResult {
-    private boolean success;
-
-    public BooleanResult(boolean success) {
-        this.success = success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public boolean getSuccess() {
-        return success;
-    }
-}
-
-class EmployeeResult {
-    private boolean success;
-    private Employee[] employees;
-
-    public EmployeeResult(boolean success, Employee[] employees) {
-        this.success = success;
-        this.employees = employees;
-    }
-
-    public Employee[] getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Employee[] employees) {
-        this.employees = employees;
-    }
-
-    public boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-}

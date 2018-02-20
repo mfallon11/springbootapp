@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 public class TextBlockParser {
     public Word[] parseText(String text) {
-        StringTokenizer tokens = new StringTokenizer(text);
+        StringTokenizer tokens = new StringTokenizer(text, " \t.\n");
 
         TreeMap<String, Word> words = new TreeMap();
 
