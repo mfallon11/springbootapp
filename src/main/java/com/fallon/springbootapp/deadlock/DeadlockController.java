@@ -43,18 +43,28 @@ class Result {
 
     /**
      * Constructor initializing success or failure.
-     * 
+     *
      * @param success boolean representing whether or not the operation was successful
      */
     public Result(boolean success) {
             this.success = success;
         }
 
-        public void setSuccess(boolean success) {
+    /**
+     * Sets whether the operation was successful
+     *
+     * @param success Operation success or failure
+     */
+    public void setSuccess(boolean success) {
             this.success = success;
         }
 
-        public boolean getSuccess() {
+    /**
+     * Returns whether or not the operation was successful
+     *
+     * @return Whether or not the operation was successful
+     */
+    public boolean getSuccess() {
             return success;
         }
     }
